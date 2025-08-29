@@ -6,14 +6,16 @@
   var minInput = prompt("Minimum diameter (e.g. 50mm or 100pt). Leave blank for none:", "");
   var maxInput = prompt("Maximum diameter (e.g. 200mm or 300pt). Leave blank for none:", "");
 
-  function parseVal(input) {
-    if (!input || String(input).trim() === "") return null;
-    var m = String(input).trim().match(/^([\d.]+)\s*(pt|mm)?$/i);
-    if (!m) { alert("Invalid input: " + input); throw new Error("bad input"); }
-    var val = parseFloat(m[1]);
-    var unit = (m[2]||"mm").toLowerCase();
-    return (unit==="pt") ? val : val*(72/25.4); // convert mm→pt
-  }
+function parseVal(input) {
+  if (!input) return null;
+  var str = String(input).replace(/^\s+|\s+$/g, ""); // manual trim
+  if (str === "") return null;
+  var m = str.match(/^([\d.]+)\s*(pt|mm)?$/i);
+  if (!m) { alert("Invalid input: " + input); throw new Error("bad input"); }
+  var val = parseFloat(m[1]);
+  var unit = (m[2]||"mm").toLowerCase();
+  return (unit==="pt") ? val : val*(72/25.4); // convert mm→pt
+}
 
   var minPt = parseVal(minInput);
   var maxPt = parseVal(maxInput);
